@@ -1,0 +1,99 @@
+<div class="card">
+  <div class="header ant-layout-header">
+    <div class="logo-container">
+      <div class="logo-bar-bottom">
+        <p>
+        <img src="./assets/images/meduni_rundlogo.png" alt="">
+         Medizinische Universität Graz
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="content ant-layout-content">
+    <form class="content" (ngSubmit)="testPassword(passWordForm.form)" #passWordForm="ngForm">
+        <div class="ant-row form-group">
+          <div class="ant-col-8">
+            <h1><i nz-icon type="safety-certificate" theme="outline"></i> Passwort Tester</h1>
+          </div>
+        </div>
+        <div class="ant-row form-group">
+
+          <div class="ant-col-3">
+            <label>Passwort:</label>
+          </div>
+          <div class="ant-col-5">
+
+            <input type="text"
+               class="form-control ng-untouched ant-input"
+               name="password"
+               ngModel
+               #nameField="ngModel"
+               placeholder="Passwort"
+               nz-input >
+          </div>
+        </div>
+        <div class="ant-row form-group">
+          <div class="ant-col-3"></div>
+          <div class="ant-col-5 center">
+            <button type="submit" class="ant-btn ant-btn-primary" name="button">Passwort testen <i nz-icon type="safety-certificate" theme="outline"></i></button>
+          </div>
+        </div>
+        <div class="ant-row form-group">
+          <div class="ant-col-3" *ngIf="infoPasswort" style="padding-top: 15px;">Passwort Ranking: </div>
+          <div class="ant-col-5" *ngIf="infoPasswort">
+              <nz-rate
+                nzAllowHalf
+                nzCount="4"
+                nzDisabled
+                [ngModel]="score"
+                [ngModelOptions]="{standalone: true}"
+                [nzCharacter]="characterIcon"
+                [ngClass] = "setClassForColor()"
+                >
+              </nz-rate>
+              <ng-template #characterIcon><i nz-icon type="safety-certificate"></i></ng-template>
+          </div>
+        </div>
+        <div class="ant-row form-group">
+          <div class="ant-col-8 errorLength" *ngIf="errorLength">
+            <nz-alert
+              nzType="error"
+              nzMessage="Fehler"
+              nzDescription="Bitte min. 1 Zeichen eintragen!"
+              nzShowIcon>
+            </nz-alert>
+          </div>
+          <div class="ant-col-8 infoPasswort" *ngIf="infoPasswort">
+              <nz-alert
+                nzType="error"
+                nzMessage="Warnung"
+                nzDescription="Ihr Passwort wurde bereits im System verwendet!"
+                *ngIf="leaked"
+                nzShowIcon>
+              </nz-alert>
+              <nz-alert
+                nzType="warning"
+                nzMessage="Warnung"
+                nzDescription="{{warning}}"
+                *ngIf="warning"
+                nzShowIcon>
+              </nz-alert>
+              <div class="suggestions" *ngFor="let suggestion of suggestions">
+                <nz-alert
+                  nzType="success"
+                  nzMessage="Vorschlag"
+                  nzDescription="{{suggestion}}"
+                  nzShowIcon>
+                </nz-alert>
+              </div>
+              <nz-alert
+                nzType="info"
+                nzMessage="Information"
+                nzDescription="Das Passwort wird in vermutlich {{guesses}} Sekunden erraten."
+                nzShowIcon>
+              </nz-alert>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
