@@ -10,7 +10,7 @@ export class ConfigService {
 
   getPassWordCheck(password) {
     //let passWordCheckUrl = "https://api.medunigraz.at/v1/base/password-strength/";
-    let passWordCheckUrl = "https://api-test.medunigraz.at/v1/base/password-strength/";
+    let passWordCheckUrl = "https://api.medunigraz.at/v1/base/password-strength/";
     let headers = new HttpHeaders().set("Content-Type", 'application/json');
 
 /*
@@ -18,6 +18,6 @@ export class ConfigService {
     console.log(params);
 */
     var parameter = JSON.stringify({"password": password});
-    return this.http.post(passWordCheckUrl, parameter, {headers: {'Content-Type': 'application/json'} });    
+    return this.http.post(passWordCheckUrl, parameter, {headers: {'Content-Type': 'application/json'} });
   }
 }
