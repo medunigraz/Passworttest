@@ -33,7 +33,7 @@
                autocomplete="off"
                nz-input >
 -->
-            <nz-input-group [nzAddOnAfter]="typeText">
+            <nz-input-group [nzAddOnAfter]="passWordIcon">
               <input
                 type="{{typePassWort}}"
                 name="password"
@@ -44,11 +44,8 @@
                 #myPassword
               >
             </nz-input-group>
-            <ng-template #typeText>
-              <i nz-icon type="eye" (click)="changeInputType()" theme="outline"></i>
-            </ng-template>
-            <ng-template #typePassword>
-              <i nz-icon type="eye" (click)="changeInputType()" theme="fill"></i>
+            <ng-template #passWordIcon>
+              <i nz-icon type="eye" (click)="changeInputType()" theme="{{stylePasswordIcon}}"></i>
             </ng-template>
           </div>
         </div>

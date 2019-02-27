@@ -16,7 +16,7 @@ export class AppComponent implements onInit {
   leaked: boolean;
   suggestions = "";
   typePassWort = "password";
-  typeInputGroup= "#typeText";
+  stylePasswordIcon= "outline";
   warning = "";
   color = "";
   crackTime = "";
@@ -109,10 +109,10 @@ export class AppComponent implements onInit {
   changeInputType() {
     if(this.typePassWort == "text") {
       this.typePassWort = "password";
-      this.typeInputGroup = "#typePassword";
+      this.stylePasswordIcon = "outline";
     } else if(this.typePassWort == "password") {
       this.typePassWort = "text";
-      this.typeInputGroup = "#typeText";
+      this.stylePasswordIcon = "fill";
     }
 //console.log(this.typePassWort);
     return this.typePassWort;
