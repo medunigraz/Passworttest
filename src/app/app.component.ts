@@ -10,7 +10,7 @@ import {ConfigService} from "./config/config.service";
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements onInit {
+export class AppComponent implements OnInit {
   infoPasswort: boolean;
   errorLength : boolean;
   leaked: boolean;
