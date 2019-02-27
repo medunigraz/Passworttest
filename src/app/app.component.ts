@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Renderer2} from '@angular/core';
 import {FormGroup, Validators, FormBuilder, FormControl} from "@angular/forms";
 
 import {ConfigService} from "./config/config.service";
@@ -9,30 +9,58 @@ import {ConfigService} from "./config/config.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+
+export class AppComponent implements onInit {
   infoPasswort: boolean;
   errorLength : boolean;
-  suggestions = "";
-  warning = "";
-  guesses = 0;
   leaked: boolean;
-  score = 0;
+  suggestions = "";
+  typePassWort = "password";
+  typeInputGroup= "#typeText";
+  warning = "";
   color = "";
+  crackTime = "";
+  guesses = 0;
+  score = 0;
+  private timeOut;
+
+  @ViewChild('myPassword') password: ElementRef;
 
   constructor(
     formBuilder: FormBuilder,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private renderer: Renderer2
   ) {
 
   }
 
-  testPassword(form) {
+  ngOnInit() {
+    this.renderer
+      .listen(
+        this.password.nativeElement, 'keyup',
+        (event) => {
+          clearTimeout(this.timeOut);
+          this.timeOut = setTimeout(
+                  () => {
+//console.log(this.password.nativeElement.value);
+                    this.testPassword(this.password.nativeElement.value);
+              }, 800
+          );
+      });
+  }
+
+//https://stackoverflow.com/questions/50275945/how-to-implement-a-debounce-time-in-keyup-event-in-angular-6/50276068
+//https://stackoverflow.com/questions/42005068/keyup-event-not-caught-with-angular-2-hostlistener
+  testPassword(password: String) {
+  //testPassword(form) {
+      let data;
       //console.log(form.value);
       //console.log(form.value.password);
-      this.configService.getPassWordCheck(form.value.password)
+      this.configService.getPassWordCheck(password)
         .subscribe(
-          (data) => {
-            //console.log(data);
+          (dataReturn) => {
+            data = dataReturn;
+  //console.log(data);
 /*
     Response:
     {
@@ -59,6 +87,7 @@ export class AppComponent {
               this.guesses = data.guesses;
               this.leaked = data.leaked;
               this.score = data.score;
+              this.crackTime = data.crack_time;
 
             }
           },
@@ -75,5 +104,17 @@ export class AppComponent {
     } else {
         return "good";
     }
+  }
+
+  changeInputType() {
+    if(this.typePassWort == "text") {
+      this.typePassWort = "password";
+      this.typeInputGroup = "#typePassword";
+    } else if(this.typePassWort == "password") {
+      this.typePassWort = "text";
+      this.typeInputGroup = "#typeText";
+    }
+//console.log(this.typePassWort);
+    return this.typePassWort;
   }
 }

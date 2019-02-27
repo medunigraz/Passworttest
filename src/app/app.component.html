@@ -22,22 +22,44 @@
             <label>Passwort:</label>
           </div>
           <div class="ant-col-5">
-
-            <input type="text"
+<!--
+            <input
+               type="{{typePassWort}}"
                class="form-control ng-untouched ant-input"
                name="password"
                ngModel
                #nameField="ngModel"
                placeholder="Passwort"
+               autocomplete="off"
                nz-input >
+-->
+            <nz-input-group [nzAddOnAfter]="typeText">
+              <input
+                type="{{typePassWort}}"
+                name="password"
+                nz-input
+                [(ngModel)]="inputValue"
+                placeholder="Passwort"
+                autocomplete="off"
+                #myPassword
+              >
+            </nz-input-group>
+            <ng-template #typeText>
+              <i nz-icon type="eye" (click)="changeInputType()" theme="outline"></i>
+            </ng-template>
+            <ng-template #typePassword>
+              <i nz-icon type="eye" (click)="changeInputType()" theme="fill"></i>
+            </ng-template>
           </div>
         </div>
+<!--
         <div class="ant-row form-group">
           <div class="ant-col-3"></div>
           <div class="ant-col-5 center">
             <button type="submit" class="ant-btn ant-btn-primary" name="button">Passwort testen <i nz-icon type="safety-certificate" theme="outline"></i></button>
           </div>
         </div>
+-->
         <div class="ant-row form-group">
           <div class="ant-col-3" *ngIf="infoPasswort" style="padding-top: 15px;">Passwort Ranking: </div>
           <div class="ant-col-5" *ngIf="infoPasswort">
@@ -65,7 +87,7 @@
           </div>
           <div class="ant-col-8 infoPasswort" *ngIf="infoPasswort">
               <nz-alert
-                nzType="error"
+                nzType="warning"
                 nzMessage="Warnung"
                 nzDescription="Ihr Passwort wurde bereits im System verwendet!"
                 *ngIf="leaked"
@@ -89,7 +111,7 @@
               <nz-alert
                 nzType="info"
                 nzMessage="Information"
-                nzDescription="Das Passwort wird in vermutlich {{guesses}} Sekunden erraten."
+                nzDescription="Das Passwort wird in vermutlich {{crackTime}} erraten."
                 nzShowIcon>
               </nz-alert>
           </div>
